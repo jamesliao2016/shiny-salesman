@@ -1,7 +1,7 @@
 miles_per_meter = 100 / 2.54 / 12 / 5280
 
-if (!exists("all_cities")) all_cities = readRDS("data/cities.rds")
-if (!exists("usa_cities")) usa_cities = readRDS("data/usa_cities.rds")
+if (!exists("all_cities")) all_cities = readRDS("data/china_cities.rds")
+if (!exists("usa_cities")) usa_cities = readRDS("data/china_cities.rds")
 
 generate_random_cities = function(n = 10, min_dist = 250, usa_only=FALSE) {
   if (usa_only) {
@@ -35,7 +35,7 @@ generate_random_cities = function(n = 10, min_dist = 250, usa_only=FALSE) {
 plot_base_map = function(map_name="world") {
   margins = c(3.5, 0, 3.5, 0)
   if (map_name == "world") {
-    map("world", col="#f3f3f3", fill=TRUE, lwd=0.2, mar=margins)
+    map("china", col = "red4", ylim = c(18, 54), panel.first = grid())
   } else if (map_name == "usa") {
     map("usa", col="#f3f3f3", border=FALSE, fill=TRUE, mar=margins) #, projection="albers", parameters=c(29.5, 45.5))
     map("state", add=TRUE, col="#999999", fill=FALSE) #, projection="albers", parameters=c(29.5, 45.5))
@@ -126,34 +126,21 @@ ensure_between = function(num, min_allowed, max_allowed) {
 }
 
 seed_cities = c(
-  "Buenos Aires, Argentina",
-  "Sydney, Australia",
-  "Rio de Janeiro, Brazil",
-  "Montreal, Canada",
-  "Beijing, China",
-  "Moroni, Comoros",
-  "Cairo, Egypt",
-  "Paris, France",
-  "Athens, Greece",
-  "Budapest, Hungary",
-  "Reykjavik, Iceland",
-  "Delhi, India",
-  "Baghdad, Iraq",
-  "Rome, Italy",
-  "Tokyo, Japan",
-  "Bamako, Mali",
-  "Mexico City, Mexico",
-  "Kathmandu, Nepal",
-  "Oslo, Norway",
-  "Port Moresby, Papua New Guinea",
-  "Lima, Peru",
-  "Kigali, Rwanda",
-  "San Marino, San Marino",
-  "Singapore, Singapore",
-  "Moscow, Russia",
-  "Colombo, Sri Lanka",
-  "Bangkok, Thailand",
-  "Istanbul, Turkey",
-  "London, UK",
-  "New York, USA"
+
+  "Changchun, China",
+  "Changsha, China",
+  "Chengdu, China",
+
+  "Dalian, China",
+  "Datong, China",
+
+  "Fuzhou, China",
+  "Guangzhou, China",
+
+  "Handan, China",
+  "Hangzhou, China",
+  "Harbin, China",
+  "Hefei, China",
+  "Jinan, China"
+  
 )

@@ -1,6 +1,8 @@
+#install.packages(c("shiny","maps","geosphere","mapdata"),repos = "http://cran.rstudio.com")
 library(shiny)
 library(maps)
 library(geosphere)
+library(mapdata)
 source("helpers.R")
 
 shinyServer(function(input, output, session) {
@@ -96,11 +98,11 @@ shinyServer(function(input, output, session) {
       vals$best_tour = c()
       vals$best_distance = Inf
 
-      vals$s_curve_amplitude = ensure_between(input$s_curve_amplitude, 0, 1000000)
-      vals$s_curve_center = ensure_between(input$s_curve_center, -1000000, 1000000)
-      vals$s_curve_width = ensure_between(input$s_curve_width, 1, 1000000)
-      vals$total_iterations = ensure_between(input$total_iterations, 1, 1000000)
-      vals$plot_every_iterations = ensure_between(input$plot_every_iterations, 1, 1000000)
+      vals$s_curve_amplitude = ensure_between(4000, 0, 1000000)
+      vals$s_curve_center = ensure_between(0, -1000000, 1000000)
+      vals$s_curve_width = ensure_between(3000, 1, 1000000)
+      vals$total_iterations = ensure_between(25000, 1, 1000000)
+      vals$plot_every_iterations = ensure_between(1000, 1, 1000000)
       
       vals$number_of_loops = ceiling(vals$total_iterations / vals$plot_every_iterations)
       vals$distances = rep(NA, vals$number_of_loops)
@@ -161,9 +163,7 @@ shinyServer(function(input, output, session) {
       pretty_temp = prettyNum(current_temperature(vals$iter, vals$s_curve_amplitude, vals$s_curve_center, vals$s_curve_width),
                               big.mark=",", digits=0, scientific=FALSE)
       
-      plot_title = paste0("Distance: ", pretty_dist, " miles\n",
-                          "Iterations: ", pretty_iter, "\n",
-                          "Temperature: ", pretty_temp)
+      plot_title = paste0("Distance: ", pretty_dist, " miles\n")
                           
       title(plot_title)
     }
@@ -174,7 +174,7 @@ shinyServer(function(input, output, session) {
     yvals = current_temperature(xvals, vals$s_curve_amplitude, vals$s_curve_center, vals$s_curve_width)
     plot(xvals, yvals, type='l', xlab="iterations", ylab="temperature", main="Annealing Schedule")
     points(vals$iter, current_temperature(vals$iter, vals$s_curve_amplitude, vals$s_curve_center, vals$s_curve_width), pch=19, col='red')
-  }, height=260)
+  }, height=0)
   
   output$distance_results = renderPlot({
     if (all(is.na(vals$distances))) return()
@@ -183,7 +183,7 @@ shinyServer(function(input, output, session) {
     plot(xvals, vals$distances, type='o', pch=19, cex=0.7, 
          ylim=c(0, max(vals$distances, na.rm=TRUE)), xlab="iterations", ylab="current tour distance",
          main="Evolution of Current Tour Distance")
-  }, height=260)
+  }, height=0)
   
   session$onSessionEnded(function() {
     run_annealing_process$suspend()
