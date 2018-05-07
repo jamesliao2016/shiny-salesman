@@ -163,7 +163,7 @@ shinyServer(function(input, output, session) {
       pretty_temp = prettyNum(current_temperature(vals$iter, vals$s_curve_amplitude, vals$s_curve_center, vals$s_curve_width),
                               big.mark=",", digits=0, scientific=FALSE)
       
-      plot_title = paste0("Distance: ", pretty_dist, " miles\n")
+      plot_title = paste0("总距离: ", pretty_dist, " miles\n")
                           
       title(plot_title)
     }

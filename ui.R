@@ -38,7 +38,7 @@ shinyUI(fluidPage(
     column(10,
       h4("选择地图与城市"),
       selectInput("map_name", NA, c("World"), "World", width="100px"),
-      p("Type below to select individual cities, or", actionButton("set_random_cities", "set randomly", icon=icon("refresh"))),
+      p("在以下文本框输入城市, 或者", actionButton("set_random_cities", "随机选择城市", icon=icon("refresh"))),
       selectizeInput("cities", NA, all_cities$full.name, multiple=TRUE, width="100%",
                      options = list(maxItems=30, maxOptions=100, placeholder="Start typing to select some cities...",
                                     selectOnTab=TRUE, openOnFocus=FALSE, hideSelected=TRUE)),
